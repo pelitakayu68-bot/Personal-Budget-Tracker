@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precision Ledger | Engineering Budget Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <aside>
+        <h2>System Input</h2>
+        <div class="input-group">
+            <label>Transaction Label</label>
+            <input type="text" id="desc" placeholder="e.g., Component Purchase">
+            <div id="err-desc" class="error-msg">Description required.</div>
+        </div>
+        <div class="input-group">
+            <label>Amount (USD)</label>
+            <input type="number" id="amount" step="0.01" placeholder="0.00">
+            <div id="err-amount" class="error-msg">Provide a valid numerical value.</div>
+        </div>
+        <div class="input-group">
+            <label>Classification</label>
+            <select id="category">
+                <option value="Income">Project Revenue</option>
+                <option value="Operational">Operational Cost</option>
+                <option value="Hardware">Hardware/Materials</option>
+                <option value="Software">License/SaaS</option>
+            </select>
+        </div>
+        <button onclick="processEntry()">Commit Transaction</button>
+        <button id="reset-btn" onclick="clearData()">Reset Ledger</button>
+    </aside>
+
+    <main>
+        <header>
+            <h1>Financial Status Report</h1>
+            <p>Group Assignment: BMKT 1723 Computer Programming</p>
+        </header>
+
+        <section class="stats">
+            <div class="card">
+                <small>NET BALANCE</small>
+                <div class="val" id="bal-total">$0.00</div>
+            </div>
+            <div class="card" id="card-income">
+                <small>TOTAL CREDITS</small>
+                <div class="val" id="bal-in">$0.00</div>
+            </div>
+            <div class="card" id="card-expense">
+                <small>TOTAL DEBITS</small>
+                <div class="val" id="bal-out">$0.00</div>
+            </div>
+        </section>
+
+        <section class="card report-card">
+            <h3>TRANSACTION LOG ENTRIES</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>REF ID</th>
+                        <th>DESCRIPTION</th>
+                        <th>CATEGORY</th>
+                        <th>VALUE</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody id="ledger-body"></tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

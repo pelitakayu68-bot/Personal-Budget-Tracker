@@ -1,0 +1,104 @@
+// Data Storage: Using an Array/List for storage [Requirement 2]
+let transactions = JSON.parse(localStorage.getItem('ledgerData')) || [];
+
+// Initial call to generate the report when the page loads
+renderUI();
+
+/**
+ * Function to handle data entry and validation
+ */
+function processEntry() {
+    const descEl = document.getElementById('desc');
+    const amtEl = document.getElementById('amount');
+    const catEl = document.getElementById('category');
+
+    // Input Validation (Error Handling) [Requirement 32, 36]
+    let isValid = true;
+    if (descEl.value.trim() === "") {
+        document.getElementById('err-desc').style.display = 'block';
+        isValid = false;
+    } else {
+        document.getElementById('err-desc').style.display = 'none';
+    }
+
+    if (isNaN(parseFloat(amtEl.value)) || amtEl.value === "") {
+        document.getElementById('err-amount').style.display = 'block';
+        isValid = false;
+    } else {
+        document.getElementById('err-amount').style.display = 'none';
+    }
+
+    if (!isValid) return;
+
+    // Creating an object to store entry data
+    const transaction = {
+        id: Date.now(),
+        description: descEl.value,
+        amount: parseFloat(amtEl.value),
+        category: catEl.value
+    };
+
+    // Pushing to the array
+    transactions.push(transaction);
+    saveAndRefresh();
+    
+    // Resetting inputs
+    descEl.value = '';
+    amtEl.value = '';
+}
+
+/**
+ * Data Persistence using Local Storage [Requirement 35]
+ */
+function saveAndRefresh() {
+    localStorage.setItem('ledgerData', JSON.stringify(transactions));
+    renderUI();
+}
+
+/**
+ * Function for report generation using Loops [Requirement 2, 28, 33]
+ */
+function renderUI() {
+    const tbody = document.getElementById('ledger-body');
+    tbody.innerHTML = '';
+    
+    let totalIn = 0;
+    let totalOut = 0;
+
+    // Loop for processing multiple transactions
+    transactions.forEach((t) => {
+        // Calculation logic
+        if (t.amount > 0) totalIn += t.amount;
+        else totalOut += Math.abs(t.amount);
+
+        // Building the table row
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>#${t.id.toString().slice(-4)}</td>
+            <td>${t.description.toUpperCase()}</td>
+            <td>${t.category}</td>
+            <td style="color: ${t.amount >= 0 ? 'var(--success)' : 'var(--danger)'}">
+                ${t.amount.toFixed(2)}
+            </td>
+            <td><button class="del-btn" onclick="deleteEntry(${t.id})">DEL</button></td>
+        `;
+        tbody.appendChild(row);
+    });
+
+    // Formatting and Displaying Output [Requirement 34]
+    document.getElementById('bal-in').innerText = `$${totalIn.toFixed(2)}`;
+    document.getElementById('bal-out').innerText = `$${totalOut.toFixed(2)}`;
+    document.getElementById('bal-total').innerText = `$${(totalIn - totalOut).toFixed(2)}`;
+}
+
+function deleteEntry(id) {
+    transactions = transactions.filter(t => t.id !== id);
+    saveAndRefresh();
+}
+
+function clearData() {
+    if(confirm("Confirm system wipe? All data will be lost.")) {
+        transactions = [];
+        saveAndRefresh();
+    }
+}

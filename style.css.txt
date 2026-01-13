@@ -1,0 +1,93 @@
+:root {
+    --bg: #f0f2f5;
+    --panel: #ffffff;
+    --primary: #1e293b; 
+    --accent: #0284c7;  
+    --success: #15803d;
+    --danger: #b91c1c;
+    --border: #cbd5e1;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--bg);
+    color: var(--primary);
+    margin: 0;
+    display: flex;
+    height: 100vh;
+}
+
+aside {
+    width: 320px;
+    background: var(--primary);
+    color: white;
+    padding: 2rem;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+}
+
+h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #334155; padding-bottom: 0.5rem; }
+
+.input-group { margin-bottom: 1.2rem; }
+label { display: block; font-size: 0.8rem; margin-bottom: 0.4rem; color: #94a3b8; }
+
+input, select {
+    width: 100%;
+    padding: 0.75rem;
+    background: #334155;
+    border: 1px solid #475569;
+    color: white;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--accent);
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+    text-transform: uppercase;
+}
+
+#reset-btn {
+    background: transparent;
+    border: 1px solid #475569;
+    margin-top: 0.5rem;
+}
+
+main { flex-grow: 1; padding: 2.5rem; overflow-y: auto; }
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.card {
+    background: var(--panel);
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--primary);
+}
+
+#card-income { border-left-color: var(--success); }
+#card-expense { border-left-color: var(--danger); }
+
+.val { font-family: 'Courier New', monospace; font-size: 1.75rem; font-weight: 700; }
+
+table { width: 100%; border-collapse: collapse; background: white; }
+th { text-align: left; padding: 1rem; border-bottom: 2px solid var(--primary); font-size: 0.85rem; }
+td { padding: 1rem; border-bottom: 1px solid var(--border); font-family: 'Courier New', monospace; }
+
+.error-msg { color: #f87171; font-size: 0.75rem; margin-top: 0.3rem; display: none; }
+
+.del-btn {
+    padding: 4px 8px;
+    font-size: 10px;
+    background: #64748b;
+    width: auto;
+    margin: 0;
+}
